@@ -17,8 +17,6 @@ RUN apt-get install -y wget && \
     rm -rf /var/lib/apt/lists/* ./mount-s3.deb
 
 #各々のGPUに対応するpytorchをインストールhttps://pytorch.org/get-started/previous-versions/
-# RUN pip install torch==2.0.1+cu117 torchvision==0.15.2+cu117 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu117
-# 今回立ち上げた環境のcudaは12.1
 RUN pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cpu
 ADD requirements.txt /kaggle/requirements.txt
 RUN pip install -r requirements.txt

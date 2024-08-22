@@ -1,5 +1,13 @@
 #/bin/bash
 
+chown -R root:root .
+
+# リポジトリのクローン&geobleuインストール
+git clone https://github.com/yahoojapan/geobleu
+cd geobleu
+pip3 install .
+cd ../
+
 # S3バケットをマウントするためのディレクトリを作成
 mkdir -p $MOUNT_POINT
 
