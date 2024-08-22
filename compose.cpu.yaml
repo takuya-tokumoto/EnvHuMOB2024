@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    privileged: true
+    shm_size: '8gb'
+    volumes:
+      - ../:/kaggle
+      - ~/.aws/credentials:/root/.aws/credentials:ro
+      - ~/.aws/config:/root/.aws/config:ro
+    environment:
+      - AWS_S3_BUCKET=user-dataset
+      - MOUNT_POINT=/kaggle/s3storage
+    working_dir: /kaggle
+    ports:
+      - "8888:8888"
+    tty: true
+ 
