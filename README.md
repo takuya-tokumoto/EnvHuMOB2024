@@ -1,26 +1,32 @@
-# 要件
+# 概要
+ubuntu環境で動作するDockerコンテナを用意
+コンテナ内にて分析作業を実施する
 
-# 準備
-1. Windows11+Docker+VSCodeによる開発環境を準備
+GPUが存在する場合と存在しない場合それぞれに対応して環境を準備
+- geoblueをインストール
 
-2. awsアカウント情報を格納したconfigファイルを作成
+# 分析環境の構築手順
+## GPUを持たないPCの場合
+PC(OS:windows11)にてGPUを持たないPCで行う場合 e.g.)シンARISEPCなど
 
-```bash
-$ aws configure
-# AWS Access Key ID={awsアカウント情報から取得}
-# AWS Secret Access Key={awsアカウント情報から取得}
-# Default region name=ap-northeast-1
-# Defaultoutputformat=None
+1. vscodeにてWSLを用いてubuntu環境に入る
+
+2. AWSログインIDを環境変数に設定※S3のマウントに必要
+```shell
+export AWS_ACCESS_KEY_ID={AWSアクセスキー}
+export AWS_SECRET_ACCESS_KEY={AWSシークレットアクセスキー}
+export AWS_DEFAULT_REGION=ap-northeast-1
 ```
-* awsコマンドがインストールできていない場合は[こちら](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html)を参照
 
-2. Dockerイメージのビルド
+2. Dockerコンテナの作成
 
-```
+```shell
 # (初回のみ)
-sudo usermod -aG docker $USER # 再起動必要
+$ sudo usermod -aG docker $USER # 再起動必要
 
-$ git clone {}
+$ mkdir {hoge} # 必ず作業用のディレクトリを作成してください
+$ cd {hoge}
+$ git clone https://github.com/takuya-tokumoto/EnvHuMOB2024.git
 $ cd EnvHuMOB2024
 
 # cpuのみ環境の場合
@@ -29,41 +35,23 @@ $ docker compose -f compose.cpu.yaml up
 $ docker compose -f compose.yaml up 
 ```
 
-3. Dockerコンテナをビルド
-
 4. DevContainerから環境に入る
 
-# What is this
-kaggle docker can use GPU  
+## GPUを持つPCの場合
+1,3の手順は同じですが2にて以下のコマンドにてコンテナを作成してください
 
-worked on docker version 24.x.x higher
-
-how to build and run
-```bash
-$ cd my_kaggle_docker
-
-# cpuのみ環境の場合
-$ docker compose -f compose.cpu.yaml up 
+```shell
 # GPUあり環境の場合
 $ docker compose -f compose.yaml up 
 ```
 
-# acess jupyter notebook
-acess here http://127.0.0.1:8888  
-default jupyter notebook password is "kaggle"  
-if u want to change password, look run.sh  
+# 利用方法
+## 作業ディレクトリ
+コンテナに入るｔｐ`/kaggle`内に作業用ディレクトリが用意されています
 
-# Attach to a running container
-In Visual Code, using attach to a running container.
-https://code.visualstudio.com/docs/devcontainers/attach-container#_attach-to-a-docker-container
+## jupyter notebookでの環境指定
 
-# setting default python
-default python switch
-```bash
-$ alias python='/opt/conda/bin/python'
-```
 
-if u want to conda activate
-```bash
-$ source /opt/conda/bin/activate
-```
+## gitの操作
+コンテナ内と外でgitの設定が変わるのでコンテナ内からgit pushなどはできないです
+コンテナ外から操作を行うかコンテナ内の権限、git cohfig情報を設定することで対応してください
