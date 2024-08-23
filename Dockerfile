@@ -23,8 +23,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     sudo ./aws/install && \
     rm -rf aws awscliv2.zip
 
-#各々のGPUに対応するpytorchをインストールhttps://pytorch.org/get-started/previous-versions/
-# RUN pip install torch==2.0.1+cu117 torchvision==0.15.2+cu117 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu117
+# 各々のGPUに対応するpytorchをインストールhttps://pytorch.org/get-started/previous-versions/
 # 今回立ち上げた環境のcudaは12.1
 RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121 
 ADD requirements.txt /kaggle/requirements.txt

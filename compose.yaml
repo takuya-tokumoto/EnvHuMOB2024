@@ -12,11 +12,12 @@ services:
     shm_size: '8gb'
     volumes:
       - ../:/kaggle
-      - ~/.aws/credentials:/root/.aws/credentials:ro
-      - ~/.aws/config:/root/.aws/config:ro
     environment:
       - AWS_S3_BUCKET=user-dataset
       - MOUNT_POINT=/kaggle/s3storage
+      - AWS_ACCESS_KEY=${your_access_key}
+      - AWS_SECRET_ACCESS_KEY=${your_secret_access_key}
+      - AWS_DEFAULT_REGION=${your_default_region}
     working_dir: /kaggle
     ports:
       - "8888:8888"

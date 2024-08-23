@@ -7,15 +7,21 @@ GPUが存在する場合と存在しない場合それぞれに対応して環�
 
 # 分析環境の構築手順
 ## GPUを持たないPCの場合
-PC(OS:windows11)にてGPUを持たないPCで行う場合 e.g.)シンARISEPCなど
+PC(OS:windows11)にてGPUを持たないPCで行う場合 e.g.)シンARISE-PCなど
+
 
 1. vscodeにてWSLを用いてubuntu環境に入る
+以下の準備状況を確認してください
+- vscode
+- Windows Subsystem for Linux
+- Ubuntu
+- DockerDesktop or Docker(CLI) 
 
 2. AWSログインIDを環境変数に設定※S3のマウントに必要
 ```shell
-export AWS_ACCESS_KEY_ID={AWSアクセスキー}
-export AWS_SECRET_ACCESS_KEY={AWSシークレットアクセスキー}
-export AWS_DEFAULT_REGION=ap-northeast-1
+export your_access_key={AWSアクセスキー}
+export your_secret_access_key={AWSシークレットアクセスキー}
+export your_default_region=ap-northeast-1
 ```
 
 2. Dockerコンテナの作成
@@ -31,8 +37,6 @@ $ cd EnvHuMOB2024
 
 # cpuのみ環境の場合
 $ docker compose -f compose.cpu.yaml up 
-# GPUあり環境の場合
-$ docker compose -f compose.yaml up 
 ```
 
 4. DevContainerから環境に入る
