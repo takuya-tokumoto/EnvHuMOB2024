@@ -16,6 +16,7 @@ PC(OS:windows11)にてGPUを持たないPCで行う場合 e.g.)シンARISE-PCな
 - Windows Subsystem for Linux
 - Ubuntu
 - DockerDesktop or Docker(CLI) 
+![プレゼンテーション2](https://github.com/user-attachments/assets/46d55231-a4cc-41f6-b05d-64e3f27e46b0)
 
 2. AWSログインIDを環境変数に設定※S3のマウントに必要
 ```shell
@@ -28,15 +29,15 @@ export your_default_region=ap-northeast-1
 
 ```shell
 # (初回のみ)
-$ sudo usermod -aG docker $USER # 再起動必要
+sudo usermod -aG docker $USER # 再起動必要
 
-$ mkdir {hoge} # 必ず作業用のディレクトリを作成してください
-$ cd {hoge}
-$ git clone https://github.com/takuya-tokumoto/EnvHuMOB2024.git
-$ cd EnvHuMOB2024
+mkdir {hoge} # 必ず作業用のディレクトリを作成してください
+cd {hoge}
+git clone https://github.com/takuya-tokumoto/EnvHuMOB2024.git
+cd EnvHuMOB2024
 
 # cpuのみ環境の場合
-$ docker compose -f compose.cpu.yaml up 
+docker compose -f compose.cpu.yaml up 
 ```
 
 4. DevContainerから環境に入る
@@ -46,14 +47,15 @@ $ docker compose -f compose.cpu.yaml up
 
 ```shell
 # GPUあり環境の場合
-$ docker compose -f compose.yaml up 
+docker compose -f compose.yaml up 
 ```
 
 # 利用方法
 ## 作業ディレクトリ
-コンテナに入るｔｐ`/kaggle`内に作業用ディレクトリが用意されています
+`/kaggle`内に作業用ディレクトリが用意されています
 
 ## jupyter notebookでの環境指定
+![Animation](https://github.com/user-attachments/assets/fe08f7cf-ee47-438e-8e54-02c7f1325075)
 
 
 ## gitの操作
