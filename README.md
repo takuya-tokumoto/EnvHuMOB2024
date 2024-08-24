@@ -72,10 +72,9 @@ AWS s3サービスによって各個人間でファイルのやり取りがで�
 - `/kaggle/s3storage/01_public/humob-challenge-2024/input`
 
 ## jupyter notebookでの環境指定について
-notebookでスクリプトを実行する際には
-python environmentは`/opt/conda/bin/python`を選択してください
+notebookでスクリプトを実行する際にはpython environmentから`/opt/conda/bin/python`を選択してください
 ![Animation](https://github.com/user-attachments/assets/fe08f7cf-ee47-438e-8e54-02c7f1325075)
 
 ## git操作について
-コンテナ内外で権限やgit設定が変更されるのでコンテナ内から`git push`などができないです
-コンテナ外から操作を行うかコンテナ内の権限、git cohfig情報を設定することで対応してください
+コンテナ内外で権限やgit設定が変更されるので現設定ではコンテナ内から`git push`などができないです  
+コンテナ外から操作を行うかコンテナ内の権限、git cohfig情報を設定することで対応してください  
