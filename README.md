@@ -1,69 +1,81 @@
-# 要件
+# 概要
+[HuMob Challenge 2024](https://wp.nyu.edu/humobchallenge2024/)用の環境構築手順  
+手元のPCにてDockerコンテナを作成しコンテナ内にて開発する環境を準備してます  
+![image](https://github.com/user-attachments/assets/6afe4e0b-9075-4b65-a062-127fe8222145)
 
-# 準備
-1. Windows11+Docker+VSCodeによる開発環境を準備
+対応状況
+- データ分析に必要なライブラリ(numpy/pandas/polars/scikitlearn..)をインストール済み
+- NNモデル用のpytorchをインストール済み
+- [geoblue](https://github.com/yahoojapan/geobleu)をインストール済み
+- ファイル共有用にAWS s3サービスを利用
+- GPUありなしそれぞれに対応したDockerfileを用意
 
-2. awsアカウント情報を格納したconfigファイルを作成
+# 環境構築の手順
+## GPUを持たないPCの場合
+PC(OS:windows11)にてGPUを持たないPCで開発する場合 (e.g.)シンARISE-PCなど
 
-```bash
-$ aws configure
-# AWS Access Key ID={awsアカウント情報から取得}
-# AWS Secret Access Key={awsアカウント情報から取得}
-# Default region name=ap-northeast-1
-# Defaultoutputformat=None
+### 1. vscodeにてWSLを用いてubuntu環境に入る
+
+以下の準備状況を確認してください
+- vscode
+  - Devcontainer  
+- Windows Subsystem for Linux 2(WSL2)
+- Ubuntu
+- DockerDesktop or Docker(CLI)
+- GitHub 
+![プレゼンテーション2](https://github.com/user-attachments/assets/46d55231-a4cc-41f6-b05d-64e3f27e46b0)
+
+### 2. AWSログインIDを環境変数に設定※S3のマウントに必要  
+```shell
+$ export your_access_key={AWSアクセスキー}
+$ export your_secret_access_key={AWSシークレットアクセスキー}
+$ export your_default_region=ap-northeast-1
 ```
-* awsコマンドがインストールできていない場合は[こちら](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html)を参照
 
-2. Dockerイメージのビルド
+### 3. Dockerコンテナの作成  
 
-```
+```shell
 # (初回のみ)
-sudo usermod -aG docker $USER # 再起動必要
+$ sudo usermod -aG docker $USER # 再起動必要
 
-$ git clone {}
+$ mkdir {hoge} # 必ず作業用のディレクトリを作成してください
+$ cd {hoge}
+$ git clone https://github.com/takuya-tokumoto/EnvHuMOB2024.git
 $ cd EnvHuMOB2024
 
 # cpuのみ環境の場合
 $ docker compose -f compose.cpu.yaml up 
+```
+
+### 4. DevContainerから環境に入る  
+![Animation](https://github.com/user-attachments/assets/cbe9c6bf-42e5-4a39-b326-6a713ce83750)
+
+
+## GPUありPCの場合
+1,2,4の手順は同じですが3にて以下のコマンドにてコンテナを作成してください
+
+```shell
 # GPUあり環境の場合
 $ docker compose -f compose.yaml up 
 ```
 
-3. Dockerコンテナをビルド
+# Tips
+## 作業ディレクトリの場所について
+コンテナ内の`/kaggle`内に作業用ディレクトリを用意  
+`/kaggle`内はコンテナ内外でファイル共有できるようにしているため開発コードは`/kaggle`配下に配置してください  
 
-4. DevContainerから環境に入る
+## ファイル共有方法について
+AWS s3サービスによって各個人間でファイルのやり取りができます  
+マートの中間生成物や学習済みモデルの重みなどは`/kaggle/s3storage/01_public/humob-challenge-2024`配下へ格納してください  
 
-# What is this
-kaggle docker can use GPU  
+今回のコンペデータは以下に格納済みです
+- `/kaggle/s3storage/01_public/humob-challenge-2024/input`
 
-worked on docker version 24.x.x higher
+## jupyter notebookでの環境指定について
+notebookでスクリプトを実行する際には
+python environmentは`/opt/conda/bin/python`を選択してください
+![Animation](https://github.com/user-attachments/assets/fe08f7cf-ee47-438e-8e54-02c7f1325075)
 
-how to build and run
-```bash
-$ cd my_kaggle_docker
-
-# cpuのみ環境の場合
-$ docker compose -f compose.cpu.yaml up 
-# GPUあり環境の場合
-$ docker compose -f compose.yaml up 
-```
-
-# acess jupyter notebook
-acess here http://127.0.0.1:8888  
-default jupyter notebook password is "kaggle"  
-if u want to change password, look run.sh  
-
-# Attach to a running container
-In Visual Code, using attach to a running container.
-https://code.visualstudio.com/docs/devcontainers/attach-container#_attach-to-a-docker-container
-
-# setting default python
-default python switch
-```bash
-$ alias python='/opt/conda/bin/python'
-```
-
-if u want to conda activate
-```bash
-$ source /opt/conda/bin/activate
-```
+## git操作について
+コンテナ内外で権限やgit設定が変更されるのでコンテナ内から`git push`などができないです
+コンテナ外から操作を行うかコンテナ内の権限、git cohfig情報を設定することで対応してください
