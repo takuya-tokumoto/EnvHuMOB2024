@@ -18,7 +18,11 @@ PC(OS:windows11)にてGPUを持たないPCで開発する場合 (e.g.)シンARIS
 
 以下の準備状況を確認してください
 - vscode
-  - Devcontainer  
+  - Devcontainer
+  - Remote-SSH
+  - (あればもっとよし) autoDocstring
+  - (あればもっとよし) isort
+  - (あればもっとよし) Black Formatter
 - Windows Subsystem for Linux 2(WSL2)
 - Ubuntu
 - DockerDesktop or Docker(CLI)
