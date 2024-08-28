@@ -3,11 +3,12 @@
 手元のPCにてDockerコンテナを作成しコンテナ内にて開発する環境を準備してます  
 ![image](https://github.com/user-attachments/assets/6afe4e0b-9075-4b65-a062-127fe8222145)
 
-対応状況
+**2024/08/28時点 対応状況**
 - データ分析に必要なライブラリ(numpy/pandas/polars/scikitlearn..)をインストール済み
 - NNモデル用のpytorchをインストール済み
 - [geoblue](https://github.com/yahoojapan/geobleu)をインストール済み
 - ファイル共有用にAWS s3サービスを利用
+- formatter(black/isort/autoDocstring)の設定ファイルを配置
 - GPUありなしそれぞれに対応したDockerfileを用意
 
 # 環境構築の手順
@@ -20,9 +21,9 @@ PC(OS:windows11)にてGPUを持たないPCで開発する場合 (e.g.)シンARIS
 - vscode
   - Devcontainer
   - Remote-SSH
-  - (あればもっとよし) autoDocstring
-  - (あればもっとよし) isort
-  - (あればもっとよし) Black Formatter
+  - (あれば便利) autoDocstring
+  - (あれば便利) isort
+  - (あれば便利) Black Formatter
 - Windows Subsystem for Linux 2(WSL2)
 - Ubuntu
 - DockerDesktop or Docker(CLI)
@@ -82,3 +83,10 @@ notebookでスクリプトを実行する際にはpython environmentから`/opt/
 ## git操作について
 コンテナ内外で権限やgit設定が変更されるので現設定ではコンテナ内から`git push`などができないです  
 コンテナ外から操作を行うかコンテナ内の権限、git config情報を設定することで対応してください  
+
+## コードフォーマッターについて
+vscodeのExtensionsから「BlackFormatter」「isort」などを追加しておくと自動でコード整形してくれるので便利  
+`.ipynb`ファイルはセル実行時に「BlackFormatter」が動作します  
+また「isort(import文をいい感じに整理してくれるツール)」はセル実行だけで動作せず「Shift」+「Alt」+「o」を押すと整形されます  
+
+![Animation](https://github.com/user-attachments/assets/3e920b50-07dc-46d1-b0d1-01495eb985fd)
