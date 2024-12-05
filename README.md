@@ -13,7 +13,7 @@
 
 # 環境構築の手順
 ## GPUを持たないPCの場合
-PC(OS:windows11)にてGPUを持たないPCで開発する場合 (e.g.)シンARISE-PCなど
+PC(OS:windows11)にてGPUを持たないPCで開発する場合  
 
 ### 1. vscodeにてWSLを用いてubuntu環境に入る
 
